@@ -1,7 +1,9 @@
 package emlakburada.repository;
 
+import java.sql.Connection;
+
 public interface DbConnectionRepository {
 
-	void connect();
+	Connection connect();
 
 }

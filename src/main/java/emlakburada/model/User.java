@@ -14,19 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
 
+	private int id;
 	private String kullaniciTipi; // bireysel & kurumsal & yeniTip
-	private String isim;
+	private String name;
 	private String email;
-	private String fotograf;
-	private String biyografi;
+	private String photo;
+	private String bio;
 	private Set<Advert> favoriIlanlar = new HashSet<>();
 	private List<Advert> yayinladigiIlanlar = new ArrayList<>();
 	private List<Message> mesajKutusu;
 
-	public User(String kullaniciTipi, String isim, String email) {
+	public User(String kullaniciTipi, String name, String email) {
 		super();
 		this.kullaniciTipi = kullaniciTipi;
-		this.isim = isim;
+		this.name = name;
 		this.email = email;
 	}
 

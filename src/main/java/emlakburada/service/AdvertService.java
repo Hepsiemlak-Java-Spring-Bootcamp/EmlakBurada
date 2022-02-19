@@ -32,7 +32,7 @@ public class AdvertService {
 	private DbConnectionRepository dbConn;
 
 	@Autowired
-	private KullaniciService kullaniciService;
+	private UserService kullaniciService;
 	
 	private static int advertNo = 38164784;
 	

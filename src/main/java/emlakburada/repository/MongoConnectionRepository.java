@@ -3,12 +3,6 @@ package emlakburada.repository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MongoConnectionRepository implements DbConnectionRepository{
-
-	@Override
-	public void connect() {
-		// TODO Auto-generated method stub
-		
-	}
+public class MongoConnectionRepository {
 
 }
