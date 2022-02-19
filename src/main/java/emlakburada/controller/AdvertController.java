@@ -16,7 +16,7 @@ import emlakburada.dto.response.AdvertResponse;
 import emlakburada.service.AdvertService;
 
 @RestController
-public class IlanController {
+public class AdvertController {
 
 	@Autowired
 	private AdvertService advertService;

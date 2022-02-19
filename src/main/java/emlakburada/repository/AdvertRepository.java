@@ -9,7 +9,7 @@ import emlakburada.model.Advert;
 import emlakburada.model.RealEstate;
 
 @Repository
-public class IlanRepository {
+public class AdvertRepository {
 
 	private String url = "localhost";
 	private String pass = "şifre";

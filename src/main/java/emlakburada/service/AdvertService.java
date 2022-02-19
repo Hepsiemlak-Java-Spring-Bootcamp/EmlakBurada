@@ -13,13 +13,13 @@ import emlakburada.model.Advert;
 import emlakburada.model.RealEstate;
 import emlakburada.model.User;
 import emlakburada.queue.QueueService;
-import emlakburada.repository.IlanRepository;
+import emlakburada.repository.AdvertRepository;
 
 @Service
 public class AdvertService {
 
 	@Autowired
-	private IlanRepository advertRepository;
+	private AdvertRepository advertRepository;
 
 	private static int advertNo = 38164784;
 
