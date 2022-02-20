@@ -5,6 +5,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import emlakburada.model.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,21 +22,26 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class User {
 
-	private int id;
-	private String kullaniciTipi; // bireysel & kurumsal & yeniTip
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID", nullable = false)
+	private Integer id;
+	@Enumerated(EnumType.STRING)
+	private UserType userType; // bireysel & kurumsal & yeniTip
 	private String name;
 	private String email;
 	private String photo;
 	private String bio;
-	private Set<Advert> favoriIlanlar = new HashSet<>();
-	private List<Advert> yayinladigiIlanlar = new ArrayList<>();
-	private List<Message> mesajKutusu;
+//	private Set<Advert> favoriIlanlar = new HashSet<>();
+//	private List<Advert> yayinladigiIlanlar = new ArrayList<>();
+//	private List<Message> mesajKutusu;
 
-	public User(String kullaniciTipi, String name, String email) {
+	public User(UserType userType, String name, String email) {
 		super();
-		this.kullaniciTipi = kullaniciTipi;
+		this.userType = userType;
 		this.name = name;
 		this.email = email;
 	}

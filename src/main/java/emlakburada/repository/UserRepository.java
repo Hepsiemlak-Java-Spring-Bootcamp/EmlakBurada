@@ -1,11 +1,9 @@
 package emlakburada.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import lombok.extern.slf4j.Slf4j;
+import emlakburada.model.User;
 
-@Slf4j
-@Repository
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, Integer>{
 
 }

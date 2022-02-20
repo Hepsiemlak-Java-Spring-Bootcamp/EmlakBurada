@@ -13,5 +13,6 @@ public class AdvertRequest {
 	private boolean oneCikarilsinMi = false;
 	private boolean incelendiMi = false;
 	private boolean aktifMi;
+	private Integer userId;
 
 }
