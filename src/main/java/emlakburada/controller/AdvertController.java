@@ -27,7 +27,7 @@ public class AdvertController {
 	}
 
 	@PostMapping(value = "/adverts")
-	public ResponseEntity<AdvertResponse> createAdvert(@RequestBody AdvertRequest request) {
+	public ResponseEntity<AdvertResponse> createAdvert(@RequestBody AdvertRequest request) throws Exception {
 		return new ResponseEntity<>(advertService.saveAdvert(request), HttpStatus.CREATED);
 	}
 

@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import emlakburada.client.BannerClientFeign;
+import emlakburada.client.response.BannerResponse;
 import emlakburada.dto.AdvertRequest;
 import emlakburada.dto.response.AdvertResponse;
 import emlakburada.model.Advert;
@@ -53,30 +55,23 @@ public class AdvertService extends AdvertBaseService {
 		return advertList;
 	}
 
-	public AdvertResponse saveAdvert(AdvertRequest request) {
+	public AdvertResponse saveAdvert(AdvertRequest request) throws Exception {
 
 		Optional<User> foundUser = userRepository.findById(request.getUserId());
 
 		Advert advert = convertToAdvert(request, foundUser);
 
-		try {
-
-			if (advert == null) {
-				throw new Exception("İlan kaydedilemedi");
-			}
-
-			Advert savedAdvert = advertRepository.save(advert);
-			// EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
-			// queueService.sendMessage(emailMessage);
-			// bannerClient.saveBanner();
-			
-			bannerClientFeign.saveBanner(prepareSaveBannerRequest());
-			return convertToAdvertResponse(savedAdvert);
-		} catch (Exception e) {
-			log.info(e.getMessage());
+		if (advert == null) {
+			throw new Exception("İlan kaydedilemedi");
 		}
 
-		return null;
+		Advert savedAdvert = advertRepository.save(advert);
+		// EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
+		// queueService.sendMessage(emailMessage);
+		// bannerClient.saveBanner(prepareSaveBannerRequest());
+
+		bannerClientFeign.saveBanner(prepareSaveBannerRequest());
+		return convertToAdvertResponse(savedAdvert);
 
 	}
 
