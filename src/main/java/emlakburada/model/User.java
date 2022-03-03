@@ -33,6 +33,7 @@ public class User {
 	private UserType userType; // bireysel & kurumsal & yeniTip
 	private String name;
 	private String email;
+	private String password;
 	private String photo;
 	private String bio;
 //	private Set<Advert> favoriIlanlar = new HashSet<>();
