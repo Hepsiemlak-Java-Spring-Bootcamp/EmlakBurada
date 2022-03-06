@@ -13,6 +13,7 @@ import emlakburada.client.BannerClientFeign;
 import emlakburada.client.response.BannerResponse;
 import emlakburada.dto.AdvertRequest;
 import emlakburada.dto.response.AdvertResponse;
+import emlakburada.exception.UserNotFoundException;
 import emlakburada.model.Advert;
 import emlakburada.model.User;
 import emlakburada.queue.QueueService;
@@ -69,15 +70,15 @@ public class AdvertService extends AdvertBaseService {
 		Advert savedAdvert = advertRepository.save(advert);
 		EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
 		queueService.sendMessage(emailMessage);
-		//bannerClient.saveBanner(prepareSaveBannerRequest());
+		// bannerClient.saveBanner(prepareSaveBannerRequest());
 
 		ResponseEntity<BannerResponse> response = bannerClientFeign.saveBanner(prepareSaveBannerRequest());
 
 		if (HttpStatus.OK == response.getStatusCode()) {
-			//log.error("banner kaydedilemedi");
+			// log.error("banner kaydedilemedi");
 			return convertToAdvertResponse(savedAdvert);
 		}
-		
+
 		return null;
 
 	}
@@ -88,6 +89,17 @@ public class AdvertService extends AdvertBaseService {
 			return convertToAdvertResponse(advert.get());
 		}
 		return new AdvertResponse();
+	}
+
+	public List<AdvertResponse> getAllFavoriteAdvertsByUserId(int userId) {
+		List<AdvertResponse> advertList = new ArrayList<>();
+		User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
+		for (Advert advert : user.getFavoriIlanlar()) {
+
+			advertList.add(convertToAdvertResponse(advert));
+		}
+		return advertList;
 	}
 
 }

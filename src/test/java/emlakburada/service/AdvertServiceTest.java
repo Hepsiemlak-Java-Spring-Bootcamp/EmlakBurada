@@ -5,10 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
@@ -29,6 +28,7 @@ import emlakburada.client.BannerClientFeign;
 import emlakburada.client.response.BannerResponse;
 import emlakburada.dto.AdvertRequest;
 import emlakburada.dto.response.AdvertResponse;
+import emlakburada.exception.UserNotFoundException;
 import emlakburada.model.Advert;
 import emlakburada.model.User;
 import emlakburada.model.enums.UserType;
@@ -198,6 +198,40 @@ class AdvertServiceTest {
 		assertNotNull(response);
 		assertEquals("başlık", response.getBaslik());
 		assertNotNull(response.getKullanici());
+
+	}
+
+	@Test
+	@DisplayName("should throw UserNotFoundException.class")
+	void getAllFavoriteAdvertsByUserIdNotFoundUserTest() {
+
+		assertThrows(UserNotFoundException.class, () -> {
+			List<AdvertResponse> response = advertService.getAllFavoriteAdvertsByUserId(1);
+			assertNull(response);
+		}, "User Not Found");
+
+	}
+
+	@Test
+	@DisplayName("should return List<AdvertResponse>")
+	void getAllFavoriteAdvertsByUserIdTest() {
+
+		User user = prepareUser();
+		user.getFavoriIlanlar().add(prepareAdvert("başlık"));
+
+		Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(user));
+
+		assertDoesNotThrow(() -> {
+			List<AdvertResponse> response = advertService.getAllFavoriteAdvertsByUserId(1);
+
+			assertNotNull(user.getFavoriIlanlar());
+
+			assertThat(user.getFavoriIlanlar().size()).isNotZero();
+
+			assertNotNull(response);
+
+			assertThat(response.size()).isNotZero();
+		});
 
 	}
 

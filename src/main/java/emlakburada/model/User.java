@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import emlakburada.model.enums.UserType;
@@ -36,7 +37,8 @@ public class User {
 	private String password;
 	private String photo;
 	private String bio;
-//	private Set<Advert> favoriIlanlar = new HashSet<>();
+	@ManyToMany
+	private Set<Advert> favoriIlanlar = new HashSet<>();
 //	private List<Advert> yayinladigiIlanlar = new ArrayList<>();
 //	private List<Message> mesajKutusu;
 
