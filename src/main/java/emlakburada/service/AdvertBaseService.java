@@ -2,6 +2,8 @@ package emlakburada.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import emlakburada.client.request.AddressRequest;
 import emlakburada.client.request.BannerRequest;
 import emlakburada.dto.AdvertRequest;
@@ -23,7 +25,7 @@ public class AdvertBaseService {
 		request.setAddress(new AddressRequest("istanbul", "kadıköy", "acik adres"));
 		return request;
 	}
-
+	
 	protected AdvertResponse convertToAdvertResponse(Advert savedAdvert) {
 		AdvertResponse response = new AdvertResponse();
 		response.setBaslik(savedAdvert.getBaslik());

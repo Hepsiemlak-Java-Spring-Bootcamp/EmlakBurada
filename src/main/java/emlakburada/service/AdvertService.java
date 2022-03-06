@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -66,18 +67,27 @@ public class AdvertService extends AdvertBaseService {
 		}
 
 		Advert savedAdvert = advertRepository.save(advert);
-		// EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
-		// queueService.sendMessage(emailMessage);
-		// bannerClient.saveBanner(prepareSaveBannerRequest());
+		EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
+		queueService.sendMessage(emailMessage);
+		//bannerClient.saveBanner(prepareSaveBannerRequest());
 
-		bannerClientFeign.saveBanner(prepareSaveBannerRequest());
-		return convertToAdvertResponse(savedAdvert);
+		ResponseEntity<BannerResponse> response = bannerClientFeign.saveBanner(prepareSaveBannerRequest());
+
+		if (HttpStatus.OK == response.getStatusCode()) {
+			//log.error("banner kaydedilemedi");
+			return convertToAdvertResponse(savedAdvert);
+		}
+		
+		return null;
 
 	}
 
 	public AdvertResponse getAdvertByAdvertId(int advertId) {
 		Optional<Advert> advert = advertRepository.findById(advertId);
-		return convertToAdvertResponse(advert.get());
+		if (advert.isPresent()) {
+			return convertToAdvertResponse(advert.get());
+		}
+		return new AdvertResponse();
 	}
 
 }
