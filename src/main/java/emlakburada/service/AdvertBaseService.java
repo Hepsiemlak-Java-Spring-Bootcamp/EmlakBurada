@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AdvertBaseService {
-	
+
 	private static int advertNo = 38164784;
-	
+
 	protected BannerRequest prepareSaveBannerRequest() {
 		BannerRequest request = new BannerRequest();
 		request.setAdvertNo(0);
@@ -25,12 +25,12 @@ public class AdvertBaseService {
 		request.setAddress(new AddressRequest("istanbul", "kadıköy", "acik adres"));
 		return request;
 	}
-	
+
 	protected AdvertResponse convertToAdvertResponse(Advert savedAdvert) {
 		AdvertResponse response = new AdvertResponse();
 		response.setBaslik(savedAdvert.getBaslik());
 		response.setFiyat(savedAdvert.getFiyat());
-		response.setAdvertNo(savedAdvert.getAdvertNo());
+		response.setAdvertNo(savedAdvert.getAdvertNo() + 1);
 		response.setKullanici(savedAdvert.getCreatorUser());
 		return response;
 	}

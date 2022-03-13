@@ -92,6 +92,8 @@ class AdvertServiceTest {
 		assertDoesNotThrow(() -> {
 			AdvertResponse response = advertService.saveAdvert(request);
 			assertEquals("başlık", response.getBaslik());
+			
+			response.getFiyat();
 			verify(queueService).sendMessage(any());
 			verify(bannerClientFeign).saveBanner(any());
 
